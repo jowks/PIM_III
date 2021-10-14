@@ -24,8 +24,8 @@ const routes = [
     component: Pessoas,
   },
   {
-    path: "/container",
-    name: "Container",
+    path: "/containers",
+    name: "Containers",
     component: Container,
   },
   {
