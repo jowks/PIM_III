@@ -36,12 +36,27 @@
             />
           </template>
           <template v-slot:actions>
-            <v-btn v-if="editIndex !== -1" outlined color="red">Apagar</v-btn>
+            <v-btn
+              v-if="editIndex !== -1"
+              @click="cancel()"
+              outlined
+              color="blue"
+            >
+              Cancelar
+            </v-btn>
+            <v-btn
+              v-if="editIndex !== -1"
+              @click="erase()"
+              outlined
+              color="red"
+            >
+              Apagar
+            </v-btn>
             <v-btn
               @click="save()"
               outlined
               :disabled="!editItem.name || !editItem.address"
-              color="green"
+              :color="editIndex !== -1 ? 'orange' : 'green'"
             >
               {{ editIndex !== -1 ? "Alterar" : "Salvar" }}
             </v-btn>
@@ -69,7 +84,7 @@ export default {
     clickedRow(val) {
       this.atRowClick(val);
     },
-    ...mapActions("pessoas", ["atRowClick"]),
+    ...mapActions("pessoas", ["cancel", "erase", "save", "atRowClick"]),
   },
 };
 </script>

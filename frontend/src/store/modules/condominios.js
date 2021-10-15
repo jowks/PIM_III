@@ -50,6 +50,11 @@ const state = {
 const getters = {
   editItem: (state) => state.editItem,
   condominios: (state) => state.condominios,
+  listAvailableCondominios: (state) =>
+    state.condominios.reduce((acc, cur) => {
+      if (!cur.containers.length) acc.push(cur);
+      return acc;
+    }, []),
 };
 const actions = {
   fetchCondominios({ commit }) {

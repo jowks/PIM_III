@@ -22,12 +22,27 @@
             <v-text-field v-model="editItem.local" label="Local" disabled />
           </template>
           <template v-slot:actions>
-            <v-btn v-if="editIndex !== -1" outlined color="red">Apagar</v-btn>
+            <v-btn
+              v-if="editIndex !== -1"
+              @click="cancel()"
+              outlined
+              color="blue"
+            >
+              Cancelar
+            </v-btn>
+            <v-btn
+              v-if="editIndex !== -1"
+              @click="erase()"
+              outlined
+              color="red"
+            >
+              Apagar
+            </v-btn>
             <v-btn
               @click="save()"
               outlined
-              :disabled="!editItem.name || !editItem.address"
-              color="green"
+              :disabled="!editItem.name || !editItem.local"
+              :color="editIndex !== -1 ? 'orange' : 'green'"
             >
               {{ editIndex !== -1 ? "Alterar" : "Salvar" }}
             </v-btn>
@@ -54,7 +69,7 @@ export default {
     clickedRow(val) {
       this.atRowClick(val);
     },
-    ...mapActions("containers", ["atRowClick"]),
+    ...mapActions("containers", ["cancel", "erase", "save", "atRowClick"]),
   },
 };
 </script>

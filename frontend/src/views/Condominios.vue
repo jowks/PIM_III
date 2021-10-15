@@ -38,9 +38,14 @@
             >
               Cancelar
             </v-btn>
-            <v-btn v-if="editIndex !== -1" @click="erase()" outlined color="red"
-              >Apagar</v-btn
+            <v-btn
+              v-if="editIndex !== -1"
+              @click="erase()"
+              outlined
+              color="red"
             >
+              Apagar
+            </v-btn>
             <v-btn
               @click="save()"
               outlined

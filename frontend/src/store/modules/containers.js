@@ -45,6 +45,18 @@ const actions = {
       attr: Object.assign({}, props),
     });
   },
+  cancel({ commit, state }) {
+    commit("SET_STATE", {
+      prop: "editIndex",
+      attr: -1,
+    });
+    commit("SET_STATE", {
+      prop: "editItem",
+      attr: Object.assign({}, state.defaultItem),
+    });
+  },
+  erase() {},
+  save() {},
 };
 
 const mutations = {

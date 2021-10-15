@@ -26,7 +26,6 @@
           </v-list-item>
         </router-link>
       </v-list>
-      <v-spacer />
     </v-navigation-drawer>
 
     <v-main>
