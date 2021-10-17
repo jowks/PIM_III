@@ -22,7 +22,7 @@
             <v-text-field v-model="editItem.address" label="Endereço" />
             <v-autocomplete
               v-model="editItem.containers"
-              :items="listAvailableContainers"
+              :items="containers"
               item-text="name"
               label="Containers"
               chips
@@ -71,14 +71,23 @@ export default {
   computed: {
     ...mapState("condominios", ["editIndex", "headerCondominios"]),
     ...mapGetters("condominios", ["editItem", "condominios"]),
-    ...mapGetters("containers", ["listAvailableContainers"]),
+    ...mapGetters("containers", ["containers"]),
   },
   components: { CustomCrud, CustomDataTable },
   methods: {
     clickedRow(val) {
       this.atRowClick(val);
     },
-    ...mapActions("condominios", ["cancel", "erase", "save", "atRowClick"]),
+    ...mapActions("condominios", [
+      "cancel",
+      "erase",
+      "save",
+      "atRowClick",
+      "fetch",
+    ]),
+  },
+  created() {
+    this.fetch();
   },
 };
 </script>

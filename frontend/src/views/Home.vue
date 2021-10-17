@@ -50,7 +50,7 @@
 
 <script>
 import CustomCard from "../components/CustomCard.vue";
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters } from "vuex";
 
 export default {
   name: "Home",
@@ -58,6 +58,14 @@ export default {
   computed: {
     ...mapGetters("containers", ["listAvailableContainers", "containers"]),
     ...mapGetters("condominios", ["listAvailableCondominios", "condominios"]),
+  },
+  methods: {
+    ...mapActions("containers", ["fetchContainers"]),
+    ...mapActions("condominios", ["fetchCondominios"]),
+  },
+  created() {
+    this.fetchContainers();
+    this.fetchCondominios();
   },
 };
 </script>

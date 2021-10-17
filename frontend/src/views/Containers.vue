@@ -2,15 +2,18 @@
   <v-container>
     <v-row dense>
       <v-col cols="8">
-        <CustomDataTable
+        <v-data-table
           :items="containers"
           :headers="headerContainers"
-          @clickedRow="clickedRow"
+          single-select
+          @click:row="clickedRow($event)"
         >
-          <template v-slot:top>
-            Containers
+          <template v-slot:item.action="{ item }">
+            <v-icon small :color="!item.local ? 'green' : 'red'">
+              mdi-circle
+            </v-icon>
           </template>
-        </CustomDataTable>
+        </v-data-table>
       </v-col>
       <v-col cols="4">
         <CustomCrud>
@@ -56,7 +59,7 @@
 <script>
 import { mapGetters, mapState, mapActions } from "vuex";
 import CustomCrud from "../components/CustomCrud.vue";
-import CustomDataTable from "../components/CustomDataTable.vue";
+// import CustomDataTable from "../components/CustomDataTable.vue";
 
 export default {
   name: "Containers",
@@ -64,12 +67,21 @@ export default {
     ...mapState("containers", ["editIndex", "headerContainers"]),
     ...mapGetters("containers", ["editItem", "containers"]),
   },
-  components: { CustomCrud, CustomDataTable },
+  components: { CustomCrud /* CustomDataTable */ },
   methods: {
     clickedRow(val) {
       this.atRowClick(val);
     },
-    ...mapActions("containers", ["cancel", "erase", "save", "atRowClick"]),
+    ...mapActions("containers", [
+      "cancel",
+      "erase",
+      "save",
+      "atRowClick",
+      "fetch",
+    ]),
+  },
+  created() {
+    this.fetch();
   },
 };
 </script>

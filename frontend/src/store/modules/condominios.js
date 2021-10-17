@@ -1,3 +1,5 @@
+import api from "../../services/api";
+
 const state = {
   condominios: [
     {
@@ -5,8 +7,8 @@ const state = {
       name: "Condominio 1",
       address: "Jose Feliciano de Camargo Junior, 504",
       containers: [
-        { id: 2, name: "Container 2", available: false },
-        { id: 5, name: "Container 5", available: false },
+        { id: 2, name: "Container 2" },
+        { id: 5, name: "Container 5" },
       ],
     },
     {
@@ -57,8 +59,13 @@ const getters = {
     }, []),
 };
 const actions = {
-  fetchCondominios({ commit }) {
-    console.log(commit);
+  async fetch({ commit }) {
+    await api
+      .get("/condominios")
+      .then(({ data }) =>
+        commit("SET_STATE", { prop: "consominios", attr: data })
+      )
+      .catch((e) => console.log(e));
   },
   atRowClick({ commit, state }, props) {
     let idx = state.condominios.findIndex((v) => v == props);
@@ -82,8 +89,38 @@ const actions = {
       attr: Object.assign({}, state.defaultItem),
     });
   },
-  erase() {},
-  save() {},
+  async erase({ dispatch, state }) {
+    await api
+      .delete("/condominios", { data: { id: state.editItem.id } })
+      .then(() => {
+        dispatch("fetch");
+        dispatch("cancel");
+      })
+      .catch((e) => console.log(e));
+  },
+  async save({ dispatch, state }) {
+    const item = state.defaultItem;
+
+    if (item.id) {
+      await api
+        .put("/condominios", item)
+        .then(() => {
+          dispatch("fetch");
+          dispatch("cancel");
+        })
+        .catch((e) => console.log(e));
+      return;
+    }
+
+    await api
+      .post("/condominios", item)
+      .then(() => {
+        dispatch("fetch");
+        dispatch("cancel");
+      })
+      .catch((e) => console.log(e));
+    return;
+  },
 };
 const mutations = {
   SET_STATE(state, { prop, attr }) {

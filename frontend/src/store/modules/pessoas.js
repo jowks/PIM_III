@@ -1,3 +1,5 @@
+import api from "../../services/api";
+
 const state = {
   pessoas: [
     {
@@ -64,6 +66,14 @@ const getters = {
 };
 
 const actions = {
+  async fetch({ commit }) {
+    await api
+      .get("/pessoas")
+      .then(({ data }) =>
+        commit("SET_STATE", { prop: "containers", attr: data })
+      )
+      .catch((e) => console.log(e));
+  },
   atRowClick({ commit, state }, props) {
     let idx = state.pessoas.findIndex((v) => v == props);
 
@@ -86,8 +96,38 @@ const actions = {
       attr: Object.assign({}, state.defaultItem),
     });
   },
-  erase() {},
-  save() {},
+  async erase({ dispatch, state }) {
+    await api
+      .delete("/pessoas", { data: { id: state.editItem.id } })
+      .then(() => {
+        dispatch("fetch");
+        dispatch("cancel");
+      })
+      .catch((e) => console.log(e));
+  },
+  async save({ dispatch, state }) {
+    const item = state.defaultItem;
+
+    if (item.id) {
+      await api
+        .put("/pessoas", item)
+        .then(() => {
+          dispatch("fetch");
+          dispatch("cancel");
+        })
+        .catch((e) => console.log(e));
+      return;
+    }
+
+    await api
+      .post("/pessoas", item)
+      .then(() => {
+        dispatch("fetch");
+        dispatch("cancel");
+      })
+      .catch((e) => console.log(e));
+    return;
+  },
 };
 
 const mutations = {

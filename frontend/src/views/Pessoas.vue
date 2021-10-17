@@ -26,10 +26,10 @@
               <v-radio label="Zelador" value="Z"></v-radio>
             </v-radio-group>
             <v-autocomplete
+              v-model="editItem.condominios"
               :items="condominios"
               item-text="name"
               item-value="id"
-              v-model="editItem.condominios"
               label="Condominios"
               multiple
               chips
@@ -84,7 +84,16 @@ export default {
     clickedRow(val) {
       this.atRowClick(val);
     },
-    ...mapActions("pessoas", ["cancel", "erase", "save", "atRowClick"]),
+    ...mapActions("pessoas", [
+      "cancel",
+      "erase",
+      "save",
+      "atRowClick",
+      "fetch",
+    ]),
+  },
+  created() {
+    this.fetch();
   },
 };
 </script>
