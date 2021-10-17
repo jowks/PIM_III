@@ -33,7 +33,12 @@ const state = {
   headerCondominios: [
     { text: "Nome", value: "name", sortable: true },
     { text: "Endereço", value: "address", sortable: true },
-    { text: "Containers", value: "containers.length", sortable: false },
+    {
+      text: "Containers",
+      value: "containers.length",
+      align: "center",
+      sortable: false,
+    },
   ],
   editIndex: -1,
   editItem: {

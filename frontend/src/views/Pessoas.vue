@@ -29,7 +29,6 @@
               v-model="editItem.condominios"
               :items="condominios"
               item-text="name"
-              item-value="id"
               label="Condominios"
               multiple
               chips

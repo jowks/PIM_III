@@ -8,8 +8,8 @@ const state = {
       name: "Joao 1",
       type: "S",
       condominios: [
-        { id: 2, name: "Container 2" },
-        { id: 5, name: "Container 5" },
+        { id: 2, name: "Condominio 2" },
+        { id: 4, name: "Condominio 4" },
       ],
     },
     {
