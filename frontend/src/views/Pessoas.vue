@@ -19,7 +19,7 @@
           </template>
           <template v-slot:body>
             <v-text-field v-model="editItem.name" label="Nome" />
-            <v-text-field v-model="editItem.cpf" label="CPF" />
+            <v-text-field v-model="editItem.cpf_1" label="CPF" maxLength="11" />
             <v-radio-group v-model="editItem.type" row>
               <v-radio label="Morador" value="M"></v-radio>
               <v-radio label="Síndico" value="S"></v-radio>
@@ -29,6 +29,7 @@
               v-model="editItem.condominios"
               :items="condominios"
               item-text="name"
+              item-value="id"
               label="Condominios"
               multiple
               chips
@@ -54,7 +55,7 @@
             <v-btn
               @click="save()"
               outlined
-              :disabled="!editItem.name || !editItem.address"
+              :disabled="!editItem.name || !editItem.cpf_1 || !editItem.type"
               :color="editIndex !== -1 ? 'orange' : 'green'"
             >
               {{ editIndex !== -1 ? "Alterar" : "Salvar" }}
@@ -83,6 +84,9 @@ export default {
     clickedRow(val) {
       this.atRowClick(val);
     },
+    ...mapActions("condominios", {
+      fetchCondominios: "fetch",
+    }),
     ...mapActions("pessoas", [
       "cancel",
       "erase",
@@ -93,6 +97,7 @@ export default {
   },
   created() {
     this.fetch();
+    this.fetchCondominios();
   },
 };
 </script>

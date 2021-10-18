@@ -1,13 +1,7 @@
 import api from "../../services/api";
 
 const state = {
-  containers: [
-    { id: 1, name: "Container 1", local: "" },
-    { id: 2, name: "Container 2", local: "Condominio 1" },
-    { id: 3, name: "Container 3", local: "" },
-    { id: 4, name: "Container 4", local: "" },
-    { id: 5, name: "Container 5", local: "Condominio 1" },
-  ],
+  containers: [],
   headerContainers: [
     {
       text: "Disponível",
@@ -31,6 +25,7 @@ const state = {
     local: "",
   },
 };
+
 const getters = {
   containers: (state) => state.containers,
   editItem: (state) => state.editItem,
@@ -40,6 +35,7 @@ const getters = {
       return acc;
     }, []),
 };
+
 const actions = {
   async fetch({ commit }) {
     await api
@@ -81,7 +77,7 @@ const actions = {
       .catch((e) => console.log(e));
   },
   async save({ dispatch, state }) {
-    const item = state.defaultItem;
+    const item = state.editItem;
 
     if (item.id) {
       await api

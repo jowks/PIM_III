@@ -1,39 +1,7 @@
 import api from "../../services/api";
 
 const state = {
-  pessoas: [
-    {
-      id: 1,
-      cpf: "",
-      name: "Joao 1",
-      type: "S",
-      condominios: [
-        { id: 2, name: "Condominio 2" },
-        { id: 4, name: "Condominio 4" },
-      ],
-    },
-    {
-      id: 2,
-      cpf: "",
-      name: "Joaquim 2",
-      type: "Z",
-      condominios: [],
-    },
-    {
-      id: 3,
-      cpf: "",
-      name: "Jobel 3",
-      type: "M",
-      condominios: [],
-    },
-    {
-      id: 4,
-      cpf: "",
-      name: "Jetulho 4",
-      type: "Z",
-      condominios: [],
-    },
-  ],
+  pessoas: [],
   headerPessoas: [
     { text: "Tipo", width: "10%", value: "type", sortable: true },
     { text: "Nome", value: "name", sortable: true },
@@ -48,14 +16,16 @@ const state = {
   editIndex: -1,
   editItem: {
     id: "",
+    cpf_1: "",
+    type: "",
     name: "",
-    address: "",
     condominios: [],
   },
   defaultItem: {
     id: "",
+    cpf_1: "",
+    type: "",
     name: "",
-    address: "",
     condominios: [],
   },
 };
@@ -69,9 +39,7 @@ const actions = {
   async fetch({ commit }) {
     await api
       .get("/pessoas")
-      .then(({ data }) =>
-        commit("SET_STATE", { prop: "containers", attr: data })
-      )
+      .then(({ data }) => commit("SET_STATE", { prop: "pessoas", attr: data }))
       .catch((e) => console.log(e));
   },
   atRowClick({ commit, state }, props) {
@@ -106,7 +74,7 @@ const actions = {
       .catch((e) => console.log(e));
   },
   async save({ dispatch, state }) {
-    const item = state.defaultItem;
+    const item = state.editItem;
 
     if (item.id) {
       await api

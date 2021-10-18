@@ -44,7 +44,7 @@
             <v-btn
               @click="save()"
               outlined
-              :disabled="!editItem.name || !editItem.local"
+              :disabled="!editItem.name"
               :color="editIndex !== -1 ? 'orange' : 'green'"
             >
               {{ editIndex !== -1 ? "Alterar" : "Salvar" }}

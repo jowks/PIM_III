@@ -24,6 +24,7 @@
               v-model="editItem.containers"
               :items="containers"
               item-text="name"
+              item-value="id"
               label="Containers"
               chips
               multiple
@@ -78,6 +79,9 @@ export default {
     clickedRow(val) {
       this.atRowClick(val);
     },
+    ...mapActions("containers", {
+      fetchContainers: "fetch",
+    }),
     ...mapActions("condominios", [
       "cancel",
       "erase",
@@ -88,6 +92,7 @@ export default {
   },
   created() {
     this.fetch();
+    this.fetchContainers();
   },
 };
 </script>
